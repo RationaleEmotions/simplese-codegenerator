@@ -87,8 +87,7 @@
         <artifactId>@project.artifactId@</artifactId>
         <version>@project.version@</version>
         <configuration>
-          <!--          <baseFolder>src/main/resources</baseFolder>-->
-          <basePackage>krishnan.mahadevan</basePackage>
+          <basePackage>kung.fu.panda</basePackage>
           <outputDirectory>generated-sources</outputDirectory>
         </configuration>
         <executions>

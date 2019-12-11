@@ -4,6 +4,7 @@
   "elements": [
     {
       "name": "foo",
+      "type": "radio",
       "locale": [
         {
           "name": "en_US",

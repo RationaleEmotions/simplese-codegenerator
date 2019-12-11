@@ -7,7 +7,7 @@
 
   <groupId>com.rationaleemotions.maven.plugins</groupId>
   <artifactId>simplese-codegenerator</artifactId>
-  <version>1.0.0</version>
+  <version>1.0.1-SNAPSHOT</version>
   <packaging>maven-plugin</packaging>
 
   <name>simplese-codegenerator Maven Plugin</name>
@@ -172,7 +172,6 @@
         <artifactId>maven-plugin-plugin</artifactId>
         <version>3.6.0</version>
         <configuration>
-          <!-- <goalPrefix>maven-archetype-plugin</goalPrefix> -->
           <skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
         </configuration>
         <executions>
