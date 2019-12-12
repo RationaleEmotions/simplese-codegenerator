@@ -10,7 +10,7 @@ In simple terms you create a json file that is compliant with **SimpleSe** that 
 
 **SimpleSe Code Generator** requires that you use : 
 * **JDK 8**.
-* **com.rationaleemotions:simple-se-pageobjects 1.5.0** or higher.
+* **com.rationaleemotions:simple-se-pageobjects 1.0.5** or higher.
 * **Selenium 3.141.59**. 
 
 ## How to use.

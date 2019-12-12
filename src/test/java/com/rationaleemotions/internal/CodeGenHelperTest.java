@@ -28,7 +28,7 @@ public class CodeGenHelperTest {
   @DataProvider(name = "dp")
   public Object[][] getTestData() {
     return new Object[][] {
-      {"panda/bar.json", "com.foo.bar.panda"},
+      {"panda" + File.separator + "bar.json", "com.foo.bar.panda"},
       {"bar.json", "com.foo.bar"},
     };
   }

@@ -27,6 +27,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Stack;
 import java.util.stream.Collectors;
 import javax.lang.model.element.Modifier;
 import org.apache.commons.io.FileUtils;
@@ -60,7 +61,7 @@ public class CodeGenHelper {
         eachFile -> {
           File f  = (File) eachFile;
           try {
-            String p = StringUtils.substringAfter(f.getAbsolutePath(), path);
+            String p = StringUtils.substringAfter(f.getAbsolutePath(), cfg.getBaseFolder() + File.separator);
             mapping.put(p, PageParser.parsePage(f.getAbsolutePath()));
           } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -75,22 +76,26 @@ public class CodeGenHelper {
   }
 
   static String constructPackageName(String resourcesDir, String baseFolder, String basePackage, String jsonFile) {
-    String file = new File(resourcesDir + File.separator + baseFolder + File.separator + jsonFile).getAbsolutePath();
-    String remaining = StringUtils.substringAfter(file, baseFolder);
-    StringBuilder packageName = new StringBuilder(basePackage);
-    String[] parts = remaining.split(File.separator);
-    if (parts.length == 0) {
-      return packageName.toString().replaceAll(File.separator, ".");
+    int index = jsonFile.lastIndexOf(File.separator);
+    String folder = "";
+    if (index != -1) {
+      folder = jsonFile.substring(0, index);
     }
-    int len = parts.length - 1;
-    for (int i = 0; i < len; i++) {
-      packageName.append(parts[i]).append(File.separator);
+    File file = new File(resourcesDir + File.separator + baseFolder + File.separator + folder);
+    Stack<String> stack = new Stack<>();
+    while (!file.getName().equals(baseFolder)) {
+      stack.push(file.getName());
+      file = file.getParentFile();
     }
-    String result = packageName.toString().replaceAll(File.separator, ".");
-    if (result.endsWith(".")) {
-      result = StringUtils.substring(result, 0, result.length() - 1);
+    if (stack.isEmpty()) {
+      return basePackage;
     }
-    return result;
+    StringBuilder pkg = new StringBuilder(basePackage).append(".");
+    while (!stack.isEmpty()) {
+      pkg.append(stack.pop()).append(".");
+    }
+    //Removes the last period(.) if it got appended at the end;
+    return StringUtils.substring(pkg.toString(), 0, pkg.length()-1);
   }
 
   private Path generate(String jsonFile, PageElement element) throws IOException {
@@ -114,7 +119,7 @@ public class CodeGenHelper {
     String base =
         cfg.getGenerateSourcesDirectory()
             + File.separator
-            + packageName.replaceAll("\\Q.\\E", File.separator);
+            + packageName.replaceAll("\\Q.\\E", "/");
 
       StringBuilder content = new StringBuilder();
       JavaFile.builder(packageName, clazz).build().writeTo(content);
