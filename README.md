@@ -28,7 +28,7 @@ Here's how a pom file that has both these plugins look like:
   <plugin>
     <groupId>com.rationaleemotions.maven.plugins</groupId>
     <artifactId>simplese-codegenerator</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <configuration>
       <!-- basePackage represents the default package name prefix for all generated classes -->
       <basePackage>kung.fu.panda</basePackage>
